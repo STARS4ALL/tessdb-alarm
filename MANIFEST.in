@@ -1,0 +1,3 @@
+include versioneer.py
+include src/dbalarm/_version.py
+
