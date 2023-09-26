@@ -4,6 +4,11 @@
 import re
 import logging
 
+# ---------------------
+# Thrid-party libraries
+# ---------------------
+import decouple
+
 # -----------------------
 # Module global variables
 # -----------------------
@@ -22,6 +27,8 @@ RE = re.compile( r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4} \[dbase#info\] DB
 
 def run(options):
 	log.debug("Executing command %s, subcomand %s with options %s", __name__, run.__name__, options)
+
+	FOO = decouple.config('FOO')
 	with open(options.file) as fd:
 		lines = fd.readlines()
 	log.info("Read %d lines", len(lines))

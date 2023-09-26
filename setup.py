@@ -15,7 +15,7 @@ LICENSE      = 'MIT'
 KEYWORDS     = ['Light Pollution','Astronomy']
 URL          = 'https://github.com/STARS4ALL/tessdb-alarm'
 DEPENDENCIES = [
-
+    "python-decouple"
 ]
 
 CLASSIFIERS  = [
