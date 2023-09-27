@@ -14,7 +14,7 @@ import sys
 import argparse
 import os.path
 import logging
-#import logging.handlers
+import logging.handlers
 import traceback
 import importlib
 
@@ -64,7 +64,8 @@ def configureLogging(options):
 	# Create a file handler
 	if options.log_file:
 		#fh = logging.handlers.WatchedFileHandler(options.log_file)
-		fh = logging.FileHandler(options.log_file)
+		#fh = logging.FileHandler(options.log_file)
+		fh = logging.handlers.TimedRotatingFileHandler(options.log_file, when='midnight', backupCount=7)
 		fh.setFormatter(fmt)
 		fh.setLevel(level)
 		log.addHandler(fh)
