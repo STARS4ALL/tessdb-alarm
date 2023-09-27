@@ -42,6 +42,8 @@ log = logging.getLogger()
 # -----------------------
 
 def configureLogging(options):
+	global log
+	
 	if options.verbose:
 		level = logging.DEBUG
 	elif options.quiet:
@@ -53,7 +55,7 @@ def configureLogging(options):
 	# Log formatter
 	#fmt = logging.Formatter('%(asctime)s - %(name)s [%(levelname)s] %(message)s')
 	fmt = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
-	# create console handler and set level to debug
+	# create console handler and set level
 	if options.console:
 		ch = logging.StreamHandler()
 		ch.setFormatter(fmt)
@@ -108,7 +110,7 @@ def createParser():
 	group = parser.add_mutually_exclusive_group()
 	group.add_argument('-v', '--verbose', action='store_true', help='Verbose output.')
 	group.add_argument('-q', '--quiet',   action='store_true', help='Quiet output.')
-	parser.add_argument('-c','--console', action='store_true', help='Do not log to console.')
+	parser.add_argument('-c','--console', action='store_true', help='Log to console.')
 	parser.add_argument('-l', '--log-file', type=str, default=None, help='Optional log file')
 	
 	# --------------------------
