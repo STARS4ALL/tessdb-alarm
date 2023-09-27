@@ -162,7 +162,7 @@ def create_or_open_database(url):
     #levels  = read_debug_levels(connection)
     version = _read_database_version(connection)
     guid    = _make_database_uuid(connection)
-    log.warn("Open database: %s, version = %s, UUID = %s", url, version, guid)
+    log.info("Open database: %s, version = %s, UUID = %s", url, version, guid)
     connection.commit()
     return connection
 
