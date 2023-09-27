@@ -34,7 +34,11 @@ CLASSIFIERS  = [
 
 
 PACKAGE_DATA = {
-    
+    'dbalarm': [
+        'sql/*.sql',
+        'sql/initial/*.sql',
+        'sql/updates/*.sql',
+    ],
 }
 
 SCRIPTS = [

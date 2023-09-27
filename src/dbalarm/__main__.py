@@ -18,11 +18,18 @@ import logging
 import traceback
 import importlib
 
+# ---------------------
+# Thrid-party libraries
+# ---------------------
+
+import decouple
+
 # -------------
 # Local imports
 # -------------
 
 from . import  __version__
+from .dbutils import create_or_open_database
 
 # -----------------------
 # Module global variables
@@ -128,6 +135,8 @@ def main():
 		configureLogging(options)
 		name = os.path.split(os.path.dirname(sys.argv[0]))[-1]
 		log.info(f"============== {name} {__version__} ==============")
+		database_url = decouple.config('DATABASE_URL')
+		connection = create_or_open_database(database_url)
 		package = f"{name}"
 		command  = f"{options.command}"
 		subcommand = "run"
@@ -136,7 +145,7 @@ def main():
 		except ModuleNotFoundError:	# when debugging module in git source tree ...
 			command  = f".{options.command}"
 			command = importlib.import_module(command, package=package)
-		getattr(command, subcommand)(options)
+		getattr(command, subcommand)(connection, options)
 	except KeyboardInterrupt as e:
 		log.critical("[%s] Interrupted by user ", __name__)
 	except Exception as e:

@@ -14,6 +14,7 @@ import decouple
 # -----------------------
 
 log = logging.getLogger(__name__)
+
 RE = re.compile( r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4} \[dbase#info\] DB Stats Readings \[Total, OK, NOK\] = \(0, 0, 0\)$" )
 
 # ------------------
@@ -25,10 +26,10 @@ RE = re.compile( r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4} \[dbase#info\] DB
 # Module entry points
 # ===================
 
-def run(options):
+def run(connection, options):
 	log.debug("Executing command %s, subcomand %s with options %s", __name__, run.__name__, options)
 
-	FOO = decouple.config('FOO')
+
 	with open(options.file) as fd:
 		lines = fd.readlines()
 	log.info("Read %d lines", len(lines))
