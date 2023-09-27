@@ -137,6 +137,8 @@ def handle_unsent_email(connection):
             # Mark success in database
             update_alarms_state(connection)
             log.info("Pending e-mails succesfully sent.")
+    else:
+        log.info("No pending e-mails.")
 
 
 # ===================
