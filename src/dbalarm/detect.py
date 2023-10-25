@@ -110,6 +110,7 @@ def handle_new_detections(connection, detections):
                 host       = decouple.config("SMTP_HOST"), 
                 port       = int(decouple.config("SMTP_PORT")),
                 password   = decouple.config("SMTP_PASSWORD"),
+
             )
         except Exception as e:
             log.error(f"Exception while sending email: {e}")
@@ -133,6 +134,8 @@ def handle_unsent_email(connection):
                 host       = decouple.config("SMTP_HOST"), 
                 port       = int(decouple.config("SMTP_PORT")),
                 password   = decouple.config("SMTP_PASSWORD"),
+                secure     = False,
+                confidential  = False,
             )
         except Exception as e:
             log.error(f"Exception while sending email: {e}")
