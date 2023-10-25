@@ -35,7 +35,7 @@ RE = re.compile( r"^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+\d{4}) \[dbase#info\] 
 # ------------------
 
 # Adapted From https://realpython.com/python-send-email/
-def email_send(subject, body, sender, receivers, host, port, password, confidential=False):
+def email_send(subject, body, sender, receivers, host, port, password, confidential=False, secure=True):
     msg_receivers = receivers
     receivers = receivers.split(sep=',')
     message = MIMEMultipart()
@@ -48,18 +48,22 @@ def email_send(subject, body, sender, receivers, host, port, password, confident
     else:
         message["From"] = sender
         message["To"]   = msg_receivers
-
     # Add body to email
     message.attach(MIMEText(body, "plain"))
-
-    # Log in to server using secure context and send email
-    context = ssl.create_default_context()
-    with smtplib.SMTP(host, port) as server:
-        server.ehlo()  # Can be omitted
-        server.starttls(context=context)
-        server.ehlo()  # Can be omitted
-        server.login(sender, password)
-        server.sendmail(sender, receivers, message.as_string())
+    if secure:
+        # Log in to server using secure context and send email
+        context = ssl.create_default_context()
+        with smtplib.SMTP(host, port) as server:
+            server.ehlo()  # Can be omitted
+            server.starttls(context=context)
+            server.ehlo()  # Can be omitted
+            server.login(sender, password)
+            server.sendmail(sender, receivers, message.as_string())
+    else:
+        with smtplib.SMTP(host, port) as server:
+            if password is not None and password != '':
+                server.login(sender, password)
+            server.sendmail(sender, receivers, message.as_string())
 
 
 def existing_detections(connection):
